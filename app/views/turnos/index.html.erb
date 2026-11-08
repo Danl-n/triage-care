@@ -1,0 +1,35 @@
+<% content_for :title, "Turnos" %>
+
+<h1>Turnos</h1>
+
+<p><%= link_to "Nuevo turno", new_turno_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Turno.human_attribute_name(:medico) %></th>
+      <th><%= Turno.human_attribute_name(:especialidad_id) %></th>
+      <th><%= Turno.human_attribute_name(:inicio) %></th>
+      <th><%= Turno.human_attribute_name(:fin) %></th>
+      <th><%= Turno.human_attribute_name(:modalidad) %></th>
+      <th><%= Turno.human_attribute_name(:tiempo_llegada_minutos) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @turnos.each do |turno| %>
+      <tr>
+        <td><%= turno.medico.nombre_completo %></td>
+        <td><%= turno.medico.especialidad.nombre %></td>
+        <td><%= fecha_hora(turno.inicio) %></td>
+        <td><%= fecha_hora(turno.fin) %></td>
+        <td><%= texto_enum(Turno, :modalidad, turno.modalidad) %></td>
+        <td><%= turno.tiempo_llegada_minutos %></td>
+        <td>
+          <%= link_to "Ver", turno %>
+          <%= link_to "Editar", edit_turno_path(turno) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

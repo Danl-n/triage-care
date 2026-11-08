@@ -1,0 +1,17 @@
+<% content_for :title, @hospital_referencia.nombre %>
+
+<h1><%= @hospital_referencia.nombre %></h1>
+
+<p>
+  <strong><%= HospitalReferencia.human_attribute_name(:tipo_red) %>:</strong>
+  <%= link_to @hospital_referencia.tipo_red.nombre, @hospital_referencia.tipo_red %>
+</p>
+<p><strong><%= HospitalReferencia.human_attribute_name(:telefono) %>:</strong> <%= @hospital_referencia.telefono %></p>
+
+<p>
+  <%= link_to "Editar", edit_hospital_referencia_path(@hospital_referencia) %> |
+  <%= link_to "Volver al listado", hospitales_referencia_path %>
+</p>
+
+<%= button_to "Eliminar", @hospital_referencia, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar este hospital?" } } %>

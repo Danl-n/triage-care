@@ -1,0 +1,14 @@
+<% content_for :title, @insumo.nombre %>
+
+<h1><%= @insumo.nombre %></h1>
+
+<p><strong><%= Insumo.human_attribute_name(:unidad) %>:</strong> <%= @insumo.unidad %></p>
+<p><strong><%= Insumo.human_attribute_name(:stock_disponible) %>:</strong> <%= @insumo.stock_disponible %></p>
+
+<p>
+  <%= link_to "Editar", edit_insumo_path(@insumo) %> |
+  <%= link_to "Volver al listado", insumos_path %>
+</p>
+
+<%= button_to "Eliminar", @insumo, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar este insumo?" } } %>

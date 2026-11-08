@@ -1,0 +1,49 @@
+<%= form_with(model: paciente) do |form| %>
+  <%= render "shared/errores", registro: paciente %>
+
+  <div class="campo">
+    <%= form.label :cedula %>
+    <%= form.text_field :cedula, maxlength: 10, inputmode: "numeric" %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :nombres %>
+    <%= form.text_field :nombres %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :apellidos %>
+    <%= form.text_field :apellidos %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :fecha_nacimiento %>
+    <%= form.date_field :fecha_nacimiento, max: Date.current %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :sexo %>
+    <%= form.select :sexo, opciones_enum(Paciente, :sexo), { prompt: "Seleccione" } %>
+  </div>
+
+  <%# Dropdown dependiente: al elegir la provincia, Stimulus pide sus cantones al servidor. %>
+  <div data-controller="dependent-select"
+       data-dependent-select-url-value="<%= cantones_provincia_path(":id") %>"
+       data-dependent-select-placeholder-value="Seleccione un cantón">
+    <div class="campo">
+      <%= form.label :provincia_id %>
+      <%= form.collection_select :provincia_id, Provincia.order(:nombre), :id, :nombre,
+            { prompt: "Seleccione una provincia" },
+            { data: { dependent_select_target: "padre", action: "dependent-select#cargar" } } %>
+    </div>
+
+    <div class="campo">
+      <%= form.label :canton_id %>
+      <%= form.collection_select :canton_id, Canton.de_provincia(paciente.provincia_id), :id, :nombre,
+            { prompt: "Seleccione un cantón" },
+            { data: { dependent_select_target: "hijo" } } %>
+    </div>
+  </div>
+
+  <%= form.submit "Guardar" %>
+<% end %>

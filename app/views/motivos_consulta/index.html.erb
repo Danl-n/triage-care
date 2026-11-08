@@ -1,0 +1,33 @@
+<% content_for :title, "Motivos de consulta" %>
+
+<h1>Motivos de consulta</h1>
+
+<p><%= link_to "Nuevo motivo de consulta", new_motivo_consulta_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= MotivoConsulta.human_attribute_name(:nombre) %></th>
+      <th><%= MotivoConsulta.human_attribute_name(:especialidad) %></th>
+      <th><%= MotivoConsulta.human_attribute_name(:requiere_quirofano) %></th>
+      <th><%= MotivoConsulta.human_attribute_name(:requiere_anestesista) %></th>
+      <th><%= MotivoConsulta.human_attribute_name(:duracion_estimada_minutos) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @motivos_consulta.each do |motivo_consulta| %>
+      <tr>
+        <td><%= motivo_consulta.nombre %></td>
+        <td><%= motivo_consulta.especialidad.nombre %></td>
+        <td><%= si_no(motivo_consulta.requiere_quirofano) %></td>
+        <td><%= si_no(motivo_consulta.requiere_anestesista) %></td>
+        <td><%= motivo_consulta.duracion_estimada_minutos %></td>
+        <td>
+          <%= link_to "Ver", motivo_consulta %>
+          <%= link_to "Editar", edit_motivo_consulta_path(motivo_consulta) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

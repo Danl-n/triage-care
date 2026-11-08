@@ -1,0 +1,27 @@
+<% content_for :title, "Cantones" %>
+
+<h1>Cantones</h1>
+
+<p><%= link_to "Nuevo cantón", new_canton_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Canton.human_attribute_name(:provincia) %></th>
+      <th><%= Canton.human_attribute_name(:nombre) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cantones.each do |canton| %>
+      <tr>
+        <td><%= canton.provincia.nombre %></td>
+        <td><%= canton.nombre %></td>
+        <td>
+          <%= link_to "Ver", canton %>
+          <%= link_to "Editar", edit_canton_path(canton) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

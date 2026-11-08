@@ -1,0 +1,10 @@
+<% content_for :title, "Editar nivel #{@nivel_riesgo.nombre}" %>
+
+<h1>Editar nivel de riesgo: <%= @nivel_riesgo.nombre %></h1>
+
+<%= render "form", nivel_riesgo: @nivel_riesgo %>
+
+<p>
+  <%= link_to "Ver", @nivel_riesgo %> |
+  <%= link_to "Volver al listado", niveles_riesgo_path %>
+</p>

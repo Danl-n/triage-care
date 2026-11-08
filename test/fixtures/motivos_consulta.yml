@@ -1,0 +1,6 @@
+herida:
+  nombre: Herida cortante
+  especialidad: emergencias
+  requiere_quirofano: false
+  requiere_anestesista: false
+  duracion_estimada_minutos: 30

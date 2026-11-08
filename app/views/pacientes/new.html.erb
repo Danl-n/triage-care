@@ -1,0 +1,7 @@
+<% content_for :title, "Nuevo paciente" %>
+
+<h1>Nuevo paciente</h1>
+
+<%= render "form", paciente: @paciente %>
+
+<p><%= link_to "Volver al listado", pacientes_path %></p>

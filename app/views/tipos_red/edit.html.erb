@@ -1,0 +1,10 @@
+<% content_for :title, "Editar tipo de red" %>
+
+<h1>Editar tipo de red</h1>
+
+<%= render "form", tipo_red: @tipo_red %>
+
+<p>
+  <%= link_to "Ver", @tipo_red %> |
+  <%= link_to "Volver al listado", tipos_red_path %>
+</p>

@@ -1,19 +1,33 @@
 Rails.application.routes.draw do
   resource :session, only: %i[ new create destroy ]
-  # dado el cambio q se hizo, solo se debe crear las 3 rutas de new create o destroy
-  # ya no es util dado que se ha eliminado el metodo de recuperacion
-  # de contrasenia dado incompatibilidad con render
-  # resources :passwords, param: :token
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  # Defines the root path route ("/")
   root "panel#index"
+
+  # Ubicación (dropdown dependiente Provincia → Cantón)
+  resources :provincias do
+    get :cantones, on: :member
+  end
+  resources :cantones
+  resources :pacientes
+
+  # Personal médico (dropdown dependiente Especialidad → Médico)
+  resources :especialidades do
+    get :medicos, on: :member
+  end
+  resources :medicos
+  resources :turnos
+
+  # Recursos
+  resources :quirofanos
+  resources :insumos
+  resources :motivos_consulta
+
+  # Derivación
+  resources :tipos_red
+  resources :hospitales_referencia
+
+  # Los 4 niveles se crean por seed: solo se consultan y se editan.
+  resources :niveles_riesgo, only: %i[ index show edit update ]
+
+  get "up" => "rails/health#show", as: :rails_health_check
 end

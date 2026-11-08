@@ -1,0 +1,18 @@
+<% content_for :title, @especialidad.nombre %>
+
+<h1><%= @especialidad.nombre %></h1>
+
+<h2>Médicos (<%= @medicos.size %>)</h2>
+<ul>
+  <% @medicos.each do |medico| %>
+    <li><%= link_to medico.nombre_completo, medico %></li>
+  <% end %>
+</ul>
+
+<p>
+  <%= link_to "Editar", edit_especialidad_path(@especialidad) %> |
+  <%= link_to "Volver al listado", especialidades_path %>
+</p>
+
+<%= button_to "Eliminar", @especialidad, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar esta especialidad?" } } %>

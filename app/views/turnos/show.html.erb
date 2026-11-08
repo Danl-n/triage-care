@@ -1,0 +1,17 @@
+<% content_for :title, "Turno de #{@turno.medico.nombre_completo}" %>
+
+<h1>Turno de <%= @turno.medico.nombre_completo %></h1>
+
+<p><strong><%= Turno.human_attribute_name(:especialidad_id) %>:</strong> <%= @turno.medico.especialidad.nombre %></p>
+<p><strong><%= Turno.human_attribute_name(:inicio) %>:</strong> <%= fecha_hora(@turno.inicio) %></p>
+<p><strong><%= Turno.human_attribute_name(:fin) %>:</strong> <%= fecha_hora(@turno.fin) %></p>
+<p><strong><%= Turno.human_attribute_name(:modalidad) %>:</strong> <%= texto_enum(Turno, :modalidad, @turno.modalidad) %></p>
+<p><strong><%= Turno.human_attribute_name(:tiempo_llegada_minutos) %>:</strong> <%= @turno.tiempo_llegada_minutos %></p>
+
+<p>
+  <%= link_to "Editar", edit_turno_path(@turno) %> |
+  <%= link_to "Volver al listado", turnos_path %>
+</p>
+
+<%= button_to "Eliminar", @turno, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar este turno?" } } %>

@@ -1,0 +1,29 @@
+<% content_for :title, "Hospitales de referencia" %>
+
+<h1>Hospitales de referencia</h1>
+
+<p><%= link_to "Nuevo hospital de referencia", new_hospital_referencia_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= HospitalReferencia.human_attribute_name(:nombre) %></th>
+      <th><%= HospitalReferencia.human_attribute_name(:tipo_red) %></th>
+      <th><%= HospitalReferencia.human_attribute_name(:telefono) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @hospitales_referencia.each do |hospital_referencia| %>
+      <tr>
+        <td><%= hospital_referencia.nombre %></td>
+        <td><%= hospital_referencia.tipo_red.nombre %></td>
+        <td><%= hospital_referencia.telefono %></td>
+        <td>
+          <%= link_to "Ver", hospital_referencia %>
+          <%= link_to "Editar", edit_hospital_referencia_path(hospital_referencia) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

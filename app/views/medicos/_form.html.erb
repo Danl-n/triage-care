@@ -1,0 +1,26 @@
+<%= form_with(model: medico) do |form| %>
+  <%= render "shared/errores", registro: medico %>
+
+  <div class="campo">
+    <%= form.label :cedula %>
+    <%= form.text_field :cedula, maxlength: 10, inputmode: "numeric" %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :nombres %>
+    <%= form.text_field :nombres %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :apellidos %>
+    <%= form.text_field :apellidos %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :especialidad_id %>
+    <%= form.collection_select :especialidad_id, Especialidad.order(:nombre), :id, :nombre,
+          { prompt: "Seleccione una especialidad" } %>
+  </div>
+
+  <%= form.submit "Guardar" %>
+<% end %>

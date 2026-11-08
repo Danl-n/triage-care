@@ -1,0 +1,4 @@
+herida_gasas:
+  motivo_consulta: herida
+  insumo: gasas
+  cantidad: 2

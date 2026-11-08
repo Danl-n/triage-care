@@ -1,0 +1,22 @@
+<%= form_with(model: nivel_riesgo) do |form| %>
+  <%= render "shared/errores", registro: nivel_riesgo %>
+
+  <p><strong><%= NivelRiesgo.human_attribute_name(:criterio) %>:</strong> <%= nivel_riesgo.criterio %></p>
+
+  <div class="campo">
+    <%= form.label :espera_maxima_minutos %>
+    <%= form.number_field :espera_maxima_minutos, min: 0, step: 1 %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :frecuencia_toma_minutos %>
+    <%= form.number_field :frecuencia_toma_minutos, min: 1, step: 1 %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :limite_derivacion_minutos %>
+    <%= form.number_field :limite_derivacion_minutos, min: 1, step: 1 %>
+  </div>
+
+  <%= form.submit "Guardar" %>
+<% end %>

@@ -1,0 +1,27 @@
+<% content_for :title, "Quirófanos" %>
+
+<h1>Quirófanos</h1>
+
+<p><%= link_to "Nuevo quirófano", new_quirofano_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Quirofano.human_attribute_name(:nombre) %></th>
+      <th><%= Quirofano.human_attribute_name(:estado) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @quirofanos.each do |quirofano| %>
+      <tr>
+        <td><%= quirofano.nombre %></td>
+        <td><%= texto_enum(Quirofano, :estado, quirofano.estado) %></td>
+        <td>
+          <%= link_to "Ver", quirofano %>
+          <%= link_to "Editar", edit_quirofano_path(quirofano) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

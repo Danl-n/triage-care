@@ -1,0 +1,29 @@
+<% content_for :title, "Insumos" %>
+
+<h1>Insumos</h1>
+
+<p><%= link_to "Nuevo insumo", new_insumo_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Insumo.human_attribute_name(:nombre) %></th>
+      <th><%= Insumo.human_attribute_name(:unidad) %></th>
+      <th><%= Insumo.human_attribute_name(:stock_disponible) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @insumos.each do |insumo| %>
+      <tr>
+        <td><%= insumo.nombre %></td>
+        <td><%= insumo.unidad %></td>
+        <td><%= insumo.stock_disponible %></td>
+        <td>
+          <%= link_to "Ver", insumo %>
+          <%= link_to "Editar", edit_insumo_path(insumo) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,6 @@
+diurno:
+  medico: paredes
+  inicio: 2026-01-10 07:00:00
+  fin: 2026-01-10 19:00:00
+  modalidad: presencial
+  tiempo_llegada_minutos: 0

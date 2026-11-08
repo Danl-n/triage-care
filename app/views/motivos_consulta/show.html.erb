@@ -1,0 +1,41 @@
+<% content_for :title, @motivo_consulta.nombre %>
+
+<h1><%= @motivo_consulta.nombre %></h1>
+
+<p>
+  <strong><%= MotivoConsulta.human_attribute_name(:especialidad) %>:</strong>
+  <%= link_to @motivo_consulta.especialidad.nombre, @motivo_consulta.especialidad %>
+</p>
+<p><strong><%= MotivoConsulta.human_attribute_name(:requiere_quirofano) %>:</strong> <%= si_no(@motivo_consulta.requiere_quirofano) %></p>
+<p><strong><%= MotivoConsulta.human_attribute_name(:requiere_anestesista) %>:</strong> <%= si_no(@motivo_consulta.requiere_anestesista) %></p>
+<p><strong><%= MotivoConsulta.human_attribute_name(:duracion_estimada_minutos) %>:</strong> <%= @motivo_consulta.duracion_estimada_minutos %></p>
+
+<h2><%= MotivoConsulta.human_attribute_name(:insumos_requeridos) %></h2>
+<% if @insumos_requeridos.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th><%= InsumoRequerido.human_attribute_name(:insumo) %></th>
+        <th><%= InsumoRequerido.human_attribute_name(:cantidad) %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @insumos_requeridos.each do |insumo_requerido| %>
+        <tr>
+          <td><%= insumo_requerido.insumo.nombre %></td>
+          <td><%= insumo_requerido.cantidad %> <%= insumo_requerido.insumo.unidad %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No requiere insumos.</p>
+<% end %>
+
+<p>
+  <%= link_to "Editar", edit_motivo_consulta_path(@motivo_consulta) %> |
+  <%= link_to "Volver al listado", motivos_consulta_path %>
+</p>
+
+<%= button_to "Eliminar", @motivo_consulta, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar este motivo de consulta?" } } %>

@@ -1,0 +1,27 @@
+<% content_for :title, "Tipos de red" %>
+
+<h1>Tipos de red</h1>
+
+<p><%= link_to "Nuevo tipo de red", new_tipo_red_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= TipoRed.human_attribute_name(:nombre) %></th>
+      <th><%= TipoRed.human_attribute_name(:descripcion) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tipos_red.each do |tipo_red| %>
+      <tr>
+        <td><%= tipo_red.nombre %></td>
+        <td><%= tipo_red.descripcion %></td>
+        <td>
+          <%= link_to "Ver", tipo_red %>
+          <%= link_to "Editar", edit_tipo_red_path(tipo_red) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

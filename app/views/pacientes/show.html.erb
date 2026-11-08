@@ -1,0 +1,19 @@
+<% content_for :title, @paciente.nombre_completo %>
+
+<h1><%= @paciente.nombre_completo %></h1>
+
+<p><strong><%= Paciente.human_attribute_name(:cedula) %>:</strong> <%= @paciente.cedula %></p>
+<p><strong><%= Paciente.human_attribute_name(:fecha_nacimiento) %>:</strong> <%= fecha(@paciente.fecha_nacimiento) %></p>
+<p><strong><%= Paciente.human_attribute_name(:sexo) %>:</strong> <%= texto_enum(Paciente, :sexo, @paciente.sexo) %></p>
+<p>
+  <strong><%= Paciente.human_attribute_name(:canton) %>:</strong>
+  <%= @paciente.canton.nombre %>, <%= @paciente.canton.provincia.nombre %>
+</p>
+
+<p>
+  <%= link_to "Editar", edit_paciente_path(@paciente) %> |
+  <%= link_to "Volver al listado", pacientes_path %>
+</p>
+
+<%= button_to "Eliminar", @paciente, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar este paciente?" } } %>

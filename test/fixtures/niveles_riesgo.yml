@@ -1,0 +1,15 @@
+alto:
+  nombre: Alto
+  prioridad: 1
+  criterio: NEWS2 de 7 o más
+  espera_maxima_minutos: 0
+  frecuencia_toma_minutos: 15
+  limite_derivacion_minutos: 30
+
+bajo:
+  nombre: Bajo
+  prioridad: 4
+  criterio: NEWS2 de 0 a 4
+  espera_maxima_minutos: 120
+  frecuencia_toma_minutos: 240
+  limite_derivacion_minutos: 240

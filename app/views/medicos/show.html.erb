@@ -1,0 +1,27 @@
+<% content_for :title, @medico.nombre_completo %>
+
+<h1><%= @medico.nombre_completo %></h1>
+
+<p><strong><%= Medico.human_attribute_name(:cedula) %>:</strong> <%= @medico.cedula %></p>
+<p>
+  <strong><%= Medico.human_attribute_name(:especialidad) %>:</strong>
+  <%= link_to @medico.especialidad.nombre, @medico.especialidad %>
+</p>
+
+<h2>Turnos (<%= @turnos.size %>)</h2>
+<ul>
+  <% @turnos.each do |turno| %>
+    <li>
+      <%= link_to "#{fecha_hora(turno.inicio)} – #{fecha_hora(turno.fin)}", turno %>
+      (<%= texto_enum(Turno, :modalidad, turno.modalidad) %>)
+    </li>
+  <% end %>
+</ul>
+
+<p>
+  <%= link_to "Editar", edit_medico_path(@medico) %> |
+  <%= link_to "Volver al listado", medicos_path %>
+</p>
+
+<%= button_to "Eliminar", @medico, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar este médico?" } } %>

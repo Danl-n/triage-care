@@ -1,0 +1,31 @@
+<% content_for :title, "Médicos" %>
+
+<h1>Médicos</h1>
+
+<p><%= link_to "Nuevo médico", new_medico_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Medico.human_attribute_name(:cedula) %></th>
+      <th><%= Medico.human_attribute_name(:apellidos) %></th>
+      <th><%= Medico.human_attribute_name(:nombres) %></th>
+      <th><%= Medico.human_attribute_name(:especialidad) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @medicos.each do |medico| %>
+      <tr>
+        <td><%= medico.cedula %></td>
+        <td><%= medico.apellidos %></td>
+        <td><%= medico.nombres %></td>
+        <td><%= medico.especialidad.nombre %></td>
+        <td>
+          <%= link_to "Ver", medico %>
+          <%= link_to "Editar", edit_medico_path(medico) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,10 +1,44 @@
 <% content_for :title, "Panel | TriageCare" %>
-<%# guarda el texto "Panel | TriageCare" bajo el nombre title %>
-<%# lo usa el layout en el <head>, entonces si alguna vista ya guardo %>
-<%# title el layout lo usa sino usa "Triage Care" %>
 
-<h1>Panel de administracion</h1>
+<h1>Panel de administración</h1>
 
-<p> Bienvenido, <%= Current.user.email_address%>.</p>
+<p>Bienvenido, <%= Current.user.email_address %>.</p>
+<p>Desde aquí se administran los datos que usa el módulo de triaje.</p>
 
-<p> Desde aqui se administran los datos que usa el modulo de triaje. </p>
+<div class="secciones">
+  <section>
+    <h2>Ubicación y pacientes</h2>
+    <ul>
+      <li><%= link_to "Provincias", provincias_path %></li>
+      <li><%= link_to "Cantones", cantones_path %></li>
+      <li><%= link_to "Pacientes", pacientes_path %></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Personal médico</h2>
+    <ul>
+      <li><%= link_to "Especialidades", especialidades_path %></li>
+      <li><%= link_to "Médicos", medicos_path %></li>
+      <li><%= link_to "Turnos", turnos_path %></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Recursos</h2>
+    <ul>
+      <li><%= link_to "Quirófanos", quirofanos_path %></li>
+      <li><%= link_to "Insumos", insumos_path %></li>
+      <li><%= link_to "Motivos de consulta", motivos_consulta_path %></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Derivación y riesgo</h2>
+    <ul>
+      <li><%= link_to "Tipos de red", tipos_red_path %></li>
+      <li><%= link_to "Hospitales de referencia", hospitales_referencia_path %></li>
+      <li><%= link_to "Niveles de riesgo", niveles_riesgo_path %></li>
+    </ul>
+  </section>
+</div>

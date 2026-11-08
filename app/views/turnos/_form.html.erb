@@ -1,0 +1,45 @@
+<%= form_with(model: turno) do |form| %>
+  <%= render "shared/errores", registro: turno %>
+
+  <%# Dropdown dependiente: al elegir la especialidad, Stimulus pide sus médicos al servidor. %>
+  <div data-controller="dependent-select"
+       data-dependent-select-url-value="<%= medicos_especialidad_path(":id") %>"
+       data-dependent-select-placeholder-value="Seleccione un médico">
+    <div class="campo">
+      <%= form.label :especialidad_id %>
+      <%= form.collection_select :especialidad_id, Especialidad.order(:nombre), :id, :nombre,
+            { prompt: "Seleccione una especialidad" },
+            { data: { dependent_select_target: "padre", action: "dependent-select#cargar" } } %>
+    </div>
+
+    <div class="campo">
+      <%= form.label :medico_id %>
+      <%= form.collection_select :medico_id, Medico.de_especialidad(turno.especialidad_id), :id, :nombre_completo,
+            { prompt: "Seleccione un médico" },
+            { data: { dependent_select_target: "hijo" } } %>
+    </div>
+  </div>
+
+  <div class="campo">
+    <%= form.label :inicio %>
+    <%= form.datetime_field :inicio %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :fin %>
+    <%= form.datetime_field :fin %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :modalidad %>
+    <%= form.select :modalidad, opciones_enum(Turno, :modalidad) %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :tiempo_llegada_minutos %>
+    <%= form.number_field :tiempo_llegada_minutos, min: 0, step: 1 %>
+    <small>0 si es presencial; minutos que tarda en llegar si está de llamada.</small>
+  </div>
+
+  <%= form.submit "Guardar" %>
+<% end %>

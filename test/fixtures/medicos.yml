@@ -1,0 +1,11 @@
+paredes:
+  cedula: "1712345675"
+  nombres: Andrea
+  apellidos: Paredes
+  especialidad: emergencias
+
+vera:
+  cedula: "0912345675"
+  nombres: Lucía
+  apellidos: Vera
+  especialidad: anestesiologia

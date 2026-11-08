@@ -1,0 +1,14 @@
+<% content_for :title, "Nivel #{@nivel_riesgo.nombre}" %>
+
+<h1>Nivel de riesgo: <%= @nivel_riesgo.nombre %></h1>
+
+<p><strong><%= NivelRiesgo.human_attribute_name(:prioridad) %>:</strong> <%= @nivel_riesgo.prioridad %></p>
+<p><strong><%= NivelRiesgo.human_attribute_name(:criterio) %>:</strong> <%= @nivel_riesgo.criterio %></p>
+<p><strong><%= NivelRiesgo.human_attribute_name(:espera_maxima_minutos) %>:</strong> <%= @nivel_riesgo.espera_maxima_minutos %></p>
+<p><strong><%= NivelRiesgo.human_attribute_name(:frecuencia_toma_minutos) %>:</strong> <%= @nivel_riesgo.frecuencia_toma_minutos %></p>
+<p><strong><%= NivelRiesgo.human_attribute_name(:limite_derivacion_minutos) %>:</strong> <%= @nivel_riesgo.limite_derivacion_minutos %></p>
+
+<p>
+  <%= link_to "Editar tiempos", edit_nivel_riesgo_path(@nivel_riesgo) %> |
+  <%= link_to "Volver al listado", niveles_riesgo_path %>
+</p>

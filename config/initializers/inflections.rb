@@ -23,4 +23,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular "hospital_referencia", "hospitales_referencia"
   inflect.irregular "nivel_riesgo", "niveles_riesgo"
   inflect.irregular "provincia", "provincias"
+  inflect.irregular "insumo_requerido", "insumos_requeridos"
 end

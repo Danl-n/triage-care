@@ -1,0 +1,25 @@
+<% content_for :title, "Especialidades" %>
+
+<h1>Especialidades</h1>
+
+<p><%= link_to "Nueva especialidad", new_especialidad_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Especialidad.human_attribute_name(:nombre) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @especialidades.each do |especialidad| %>
+      <tr>
+        <td><%= especialidad.nombre %></td>
+        <td>
+          <%= link_to "Ver", especialidad %>
+          <%= link_to "Editar", edit_especialidad_path(especialidad) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

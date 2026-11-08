@@ -1,0 +1,10 @@
+<% if registro.errors.any? %>
+  <div class="errores" role="alert">
+    <h2>No se pudo guardar (<%= pluralize(registro.errors.count, "error", plural: "errores") %>):</h2>
+    <ul>
+      <% registro.errors.full_messages.each do |mensaje| %>
+        <li><%= mensaje %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

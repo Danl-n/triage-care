@@ -1,0 +1,27 @@
+<% content_for :title, "Provincias" %>
+
+<h1>Provincias</h1>
+
+<p><%= link_to "Nueva provincia", new_provincia_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Provincia.human_attribute_name(:codigo) %></th>
+      <th><%= Provincia.human_attribute_name(:nombre) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @provincias.each do |provincia| %>
+      <tr>
+        <td><%= provincia.codigo %></td>
+        <td><%= provincia.nombre %></td>
+        <td>
+          <%= link_to "Ver", provincia %>
+          <%= link_to "Editar", edit_provincia_path(provincia) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,35 @@
+<% content_for :title, "Pacientes" %>
+
+<h1>Pacientes</h1>
+
+<p><%= link_to "Nuevo paciente", new_paciente_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Paciente.human_attribute_name(:cedula) %></th>
+      <th><%= Paciente.human_attribute_name(:apellidos) %></th>
+      <th><%= Paciente.human_attribute_name(:nombres) %></th>
+      <th><%= Paciente.human_attribute_name(:fecha_nacimiento) %></th>
+      <th><%= Paciente.human_attribute_name(:sexo) %></th>
+      <th><%= Paciente.human_attribute_name(:canton) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pacientes.each do |paciente| %>
+      <tr>
+        <td><%= paciente.cedula %></td>
+        <td><%= paciente.apellidos %></td>
+        <td><%= paciente.nombres %></td>
+        <td><%= fecha(paciente.fecha_nacimiento) %></td>
+        <td><%= texto_enum(Paciente, :sexo, paciente.sexo) %></td>
+        <td><%= paciente.canton.nombre %> (<%= paciente.canton.provincia.nombre %>)</td>
+        <td>
+          <%= link_to "Ver", paciente %>
+          <%= link_to "Editar", edit_paciente_path(paciente) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

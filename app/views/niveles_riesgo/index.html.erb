@@ -1,0 +1,35 @@
+<% content_for :title, "Niveles de riesgo" %>
+
+<h1>Niveles de riesgo</h1>
+
+<p><small>Los 4 niveles vienen cargados por seed. Solo se pueden editar sus tiempos.</small></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= NivelRiesgo.human_attribute_name(:prioridad) %></th>
+      <th><%= NivelRiesgo.human_attribute_name(:nombre) %></th>
+      <th><%= NivelRiesgo.human_attribute_name(:criterio) %></th>
+      <th><%= NivelRiesgo.human_attribute_name(:espera_maxima_minutos) %></th>
+      <th><%= NivelRiesgo.human_attribute_name(:frecuencia_toma_minutos) %></th>
+      <th><%= NivelRiesgo.human_attribute_name(:limite_derivacion_minutos) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @niveles_riesgo.each do |nivel_riesgo| %>
+      <tr>
+        <td><%= nivel_riesgo.prioridad %></td>
+        <td><%= nivel_riesgo.nombre %></td>
+        <td><%= nivel_riesgo.criterio %></td>
+        <td><%= nivel_riesgo.espera_maxima_minutos %></td>
+        <td><%= nivel_riesgo.frecuencia_toma_minutos %></td>
+        <td><%= nivel_riesgo.limite_derivacion_minutos %></td>
+        <td>
+          <%= link_to "Ver", nivel_riesgo %>
+          <%= link_to "Editar", edit_nivel_riesgo_path(nivel_riesgo) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

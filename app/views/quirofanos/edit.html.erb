@@ -1,0 +1,10 @@
+<% content_for :title, "Editar quirófano" %>
+
+<h1>Editar quirófano</h1>
+
+<%= render "form", quirofano: @quirofano %>
+
+<p>
+  <%= link_to "Ver", @quirofano %> |
+  <%= link_to "Volver al listado", quirofanos_path %>
+</p>

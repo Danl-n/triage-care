@@ -1,0 +1,9 @@
+gasas:
+  nombre: Gasas estériles
+  unidad: paquete
+  stock_disponible: 100
+
+sutura:
+  nombre: Sutura absorbible 3-0
+  unidad: unidad
+  stock_disponible: 20

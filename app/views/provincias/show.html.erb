@@ -1,0 +1,23 @@
+<% content_for :title, @provincia.nombre %>
+
+<h1><%= @provincia.nombre %></h1>
+
+<p>
+  <strong><%= Provincia.human_attribute_name(:codigo) %>:</strong>
+  <%= @provincia.codigo %>
+</p>
+
+<h2>Cantones (<%= @cantones.size %>)</h2>
+<ul>
+  <% @cantones.each do |canton| %>
+    <li><%= link_to canton.nombre, canton %></li>
+  <% end %>
+</ul>
+
+<p>
+  <%= link_to "Editar", edit_provincia_path(@provincia) %> |
+  <%= link_to "Volver al listado", provincias_path %>
+</p>
+
+<%= button_to "Eliminar", @provincia, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar esta provincia?" } } %>

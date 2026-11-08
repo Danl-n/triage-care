@@ -1,0 +1,10 @@
+<% content_for :title, "Editar motivo de consulta" %>
+
+<h1>Editar motivo de consulta</h1>
+
+<%= render "form", motivo_consulta: @motivo_consulta %>
+
+<p>
+  <%= link_to "Ver", @motivo_consulta %> |
+  <%= link_to "Volver al listado", motivos_consulta_path %>
+</p>

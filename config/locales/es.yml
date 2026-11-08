@@ -1,0 +1,150 @@
+es:
+  activerecord:
+    models:
+      provincia:
+        one: Provincia
+        other: Provincias
+      canton:
+        one: Cantón
+        other: Cantones
+      especialidad:
+        one: Especialidad
+        other: Especialidades
+      medico:
+        one: Médico
+        other: Médicos
+      turno:
+        one: Turno
+        other: Turnos
+      quirofano:
+        one: Quirófano
+        other: Quirófanos
+      insumo:
+        one: Insumo
+        other: Insumos
+      motivo_consulta:
+        one: Motivo de consulta
+        other: Motivos de consulta
+      insumo_requerido:
+        one: Insumo requerido
+        other: Insumos requeridos
+      tipo_red:
+        one: Tipo de red
+        other: Tipos de red
+      hospital_referencia:
+        one: Hospital de referencia
+        other: Hospitales de referencia
+      nivel_riesgo:
+        one: Nivel de riesgo
+        other: Niveles de riesgo
+      paciente:
+        one: Paciente
+        other: Pacientes
+
+    attributes:
+      provincia:
+        codigo: Código
+        nombre: Nombre
+        cantones: cantones
+      canton:
+        nombre: Nombre
+        provincia: Provincia
+        provincia_id: Provincia
+        pacientes: pacientes
+      especialidad:
+        nombre: Nombre
+        medicos: médicos
+        motivos_consulta: motivos de consulta
+      medico:
+        cedula: Cédula
+        nombres: Nombres
+        apellidos: Apellidos
+        especialidad: Especialidad
+        especialidad_id: Especialidad
+        turnos: turnos
+      turno:
+        medico: Médico
+        medico_id: Médico
+        especialidad_id: Especialidad
+        inicio: Inicio
+        fin: Fin
+        modalidad: Modalidad
+        tiempo_llegada_minutos: Tiempo de llegada (minutos)
+      quirofano:
+        nombre: Nombre
+        estado: Estado
+      insumo:
+        nombre: Nombre
+        unidad: Unidad
+        stock_disponible: Stock disponible
+        insumos_requeridos: motivos de consulta que lo requieren
+      motivo_consulta:
+        nombre: Nombre
+        especialidad: Especialidad
+        especialidad_id: Especialidad
+        requiere_quirofano: Requiere quirófano
+        requiere_anestesista: Requiere anestesista
+        duracion_estimada_minutos: Duración estimada (minutos)
+        insumos_requeridos: Insumos requeridos
+      motivo_consulta/insumos_requeridos:
+        insumo: Insumo
+        cantidad: Cantidad del insumo
+      insumo_requerido:
+        insumo: Insumo
+        insumo_id: Insumo
+        cantidad: Cantidad
+      tipo_red:
+        nombre: Nombre
+        descripcion: Descripción
+        hospitales_referencia: hospitales de referencia
+      hospital_referencia:
+        nombre: Nombre
+        tipo_red: Tipo de red
+        tipo_red_id: Tipo de red
+        telefono: Teléfono
+      nivel_riesgo:
+        nombre: Nombre
+        prioridad: Prioridad
+        criterio: Criterio NEWS2
+        espera_maxima_minutos: Espera máxima (minutos)
+        frecuencia_toma_minutos: Frecuencia de toma de signos (minutos)
+        limite_derivacion_minutos: Límite para derivación (minutos)
+      paciente:
+        cedula: Cédula
+        nombres: Nombres
+        apellidos: Apellidos
+        fecha_nacimiento: Fecha de nacimiento
+        sexo: Sexo
+        canton: Cantón
+        canton_id: Cantón
+        provincia_id: Provincia
+
+    errors:
+      messages:
+        cedula_formato: debe tener exactamente 10 dígitos numéricos
+        cedula_provincia: tiene un código de provincia inválido (debe ser de 01 a 24, o 30)
+        cedula_tercer_digito: tiene un tercer dígito inválido (debe ser menor que 6)
+        cedula_verificador: no es válida (el dígito verificador no coincide)
+        posterior_al_inicio: debe ser posterior al inicio
+        no_pertenece_a_especialidad: no pertenece a la especialidad seleccionada
+        no_pertenece_a_provincia: no pertenece a la provincia seleccionada
+        debe_ser_cero_si_presencial: debe ser 0 cuando la modalidad es presencial
+        requerido_si_de_llamada: debe ser mayor que 0 cuando el médico está de llamada
+        turno_cruzado: El médico ya tiene otro turno que se cruza con este horario
+        insumos_repetidos: No se puede repetir el mismo insumo en un motivo de consulta
+        no_futura: no puede ser una fecha futura
+
+  enums:
+    turno:
+      modalidad:
+        presencial: Presencial
+        de_llamada: De llamada
+    quirofano:
+      estado:
+        disponible: Disponible
+        ocupado: Ocupado
+        mantenimiento: En mantenimiento
+    paciente:
+      sexo:
+        masculino: Masculino
+        femenino: Femenino

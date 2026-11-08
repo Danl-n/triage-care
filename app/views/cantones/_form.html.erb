@@ -1,0 +1,16 @@
+<%= form_with(model: canton) do |form| %>
+  <%= render "shared/errores", registro: canton %>
+
+  <div class="campo">
+    <%= form.label :provincia_id %>
+    <%= form.collection_select :provincia_id, Provincia.order(:nombre), :id, :nombre,
+          { prompt: "Seleccione una provincia" } %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :nombre %>
+    <%= form.text_field :nombre %>
+  </div>
+
+  <%= form.submit "Guardar" %>
+<% end %>
