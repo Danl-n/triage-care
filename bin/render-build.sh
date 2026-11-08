@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-#Shebang: indica a linux "ejecuta este archivo con bash"
-set -o errexit #si falla cualquier comando se detiene el script
+set -o errexit
 
-bundle install # instala en el servidor de render las gemas de Gemfile.lock
-bin/rails assets:precompile # prepara los archivos css y js para produccion
-bin/rails db:migrate # aplica las migraciones pendientes en la base de render
-bin/rails db:seed # crea el usuario admin
+bundle install
+bin/rails assets:precompile
+bin/rails db:migrate
 
-#los seeds van aca por que en free render no tiene consola, asi que los seed corren
-#en cada deploy
+# Los seeds corren en cada deploy porque el plan gratuito de Render no tiene consola.
+# Es seguro porque son idempotentes (find_or_create_by!).
+bin/rails db:seed

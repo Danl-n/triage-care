@@ -80,7 +80,7 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production: #configuracion para produccion, en render la variable RAILS_ENV vale production
-  <<: *default # <<: *default: igual que development y test, hereda lo comun
-  url: <%= ENV["DATABASE_URL"] %> # lee la direccion completa desde la variable de entorno que render da
+production:
+  <<: *default
+  url: <%= ENV["DATABASE_URL"] %>
 

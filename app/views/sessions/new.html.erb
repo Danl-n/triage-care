@@ -1,34 +1,17 @@
-<h1>Iniciar sesion</h1>
+<% content_for :title, "Iniciar sesión | TriageCare" %>
+
+<h1>Iniciar sesión</h1>
 
 <%= form_with url: session_path do |form| %>
-<%# form_with como un helper que fabrica un formulario %>
-<%# url: session_path indica a donde se envian los datos %>
-<%# del formulario %>
-<%# do |form| abre un bloque dentro form en un helper para %>
-<%#  crear los campos de los formularios %>
-  <div>
-     <%= form.label :email_address, "Correo electronico" %><br>
-     <%# crea una etiqueta de campo :email_address que indica %>
-     <%# que el campo pertenece y "Coreo electronico es texto visible" %>
-     <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
-     <%# crea la caja para escribir el correo %>
-     <%# email_field crea <input type="email"> el navegador revisa que tenga %>
-     <%# formato con @ %>
-     <%# required: true, el navegador no permite un formulario vacio %>
-     <%# autofocus: true al abrir la apgian el cursor se encuentra en este campo %>
-     <%# autocomplete: "username" le dice al gestor de contrasenias del %>
-     <%# navegador que ese es el usuario %> 
+  <div class="campo">
+    <%= form.label :email_address, "Correo electrónico" %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
   </div>
 
-  <div>
-    <%= form.label :password, "Contrasenia" %><br>
+  <div class="campo">
+    <%= form.label :password, "Contraseña" %>
     <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72 %>
-    <%# crea un <input type=password> que muestra puntos en lugar %>
-    <%# de letras %>
-    <%# maxlength: 72 es dado que bycrpt solo usa los primeros 72 %>
-    <%# bytes de la contrasenia el resto lo ignora %>
   </div>
 
   <%= form.submit "Ingresar" %>
-  <%# crea el boton de enviar %>
 <% end %>

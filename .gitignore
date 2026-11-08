@@ -33,5 +33,7 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
-#Ignore claude code.md
+# Notas personales y del tutor IA (no se versionan)
 /CLAUDE.md
+/APUNTES.md
+/GUION_VIDEO.md

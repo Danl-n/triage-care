@@ -1,57 +1,35 @@
-<%# Rails ejecuta Ruby en el servidor, al navegador solo llega HTML nunca ve Ruby %>
-<%# <%= ...%> <%# ejecuta ruby y escribe el resultado en la pagina %>
-<%# <% ... %> <%# ejecuta ruby pero no escribe nada %>
-<%# <%# %> <%#comentario %>
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title><%= content_for(:title) || "Triage Care" %></title>
+    <title><%= content_for(:title) || "TriageCare" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Triage Care">
+    <meta name="application-name" content="TriageCare">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <% if authenticated? %> <%# comprobar si hay alguna sesion iniciada %>
-                            <%# authenticated? es un metodo creado por el %>
-                            <%# generador por convencion los metodos terminados %>
-                            <%# en ? devuelven si o no %>
-                            <%# Entonces en la pantalla de login no hay sesion %>
-                            <%# por lo que no aparece menu %>
-      <nav>
-        <%= link_to "Panel", root_path %> <%# link_to es un helper de Rails recibe %>
-                                          <%# texto que se ve y a donde lleva %>
-                                          <%# root_path devuelve la direccion "/" Rails %>
-                                          <%# crea de manera automatica un metodo algo_path %>
-                                          <%# por cada ruta de routes.rb, como se puso: %>
-                                          <%# root "panel#index" existe root_path %>
-          <%= Current.user.email_address %> <%# obtiene el correo del usuario de sesion%>
-        <%= button_to "Cerrar sesion", session_path, method: :delete %> <%# sesion_path direccion %>
-                                                                        <%# method: :delet indica tipo %>
-                                                                        <%# de peticion a enviar %>
+    <% if authenticated? %>
+      <nav class="menu">
+        <%= link_to "TriageCare · Panel", root_path %>
+        <span class="usuario"><%= Current.user.email_address %></span>
+        <%= button_to "Cerrar sesión", session_path, method: :delete %>
       </nav>
-      <hr>
     <% end %>
 
     <% flash.each do |tipo, mensaje| %>
-      <p class="flash-<%= tipo %>"><%= mensaje %></p>
+      <p class="flash flash-<%= tipo %>"><%= mensaje %></p>
     <% end %>
 
     <main>
