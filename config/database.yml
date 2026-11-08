@@ -80,8 +80,7 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
-  <<: *default
-  database: triage_care_production
-  username: triage_care
-  password: <%= ENV["TRIAGE_CARE_DATABASE_PASSWORD"] %>
+production: #configuracion para produccion, en render la variable RAILS_ENV vale production
+  <<: *default # <<: *default: igual que development y test, hereda lo comun
+  url: <%= ENV["DATABASE_URL"] %> # lee la direccion completa desde la variable de entorno que render da
+
