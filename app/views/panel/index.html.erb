@@ -1,0 +1,10 @@
+<% content_for :title, "Panel | TriageCare" %>
+<%# guarda el texto "Panel | TriageCare" bajo el nombre title %>
+<%# lo usa el layout en el <head>, entonces si alguna vista ya guardo %>
+<%# title el layout lo usa sino usa "Triage Care" %>
+
+<h1>Panel de administracion</h1>
+
+<p> Bienvenido, <%= Current.user.email_address%>.</p>
+
+<p> Desde aqui se administran los datos que usa el modulo de triaje. </p>

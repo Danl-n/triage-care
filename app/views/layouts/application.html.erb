@@ -1,5 +1,10 @@
+<%# Rails ejecuta Ruby en el servidor, al navegador solo llega HTML nunca ve Ruby %>
+<%# <%= ...%> <%# ejecuta ruby y escribe el resultado en la pagina %>
+<%# <% ... %> <%# ejecuta ruby pero no escribe nada %>
+<%# <%# %> <%#comentario %>
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
     <title><%= content_for(:title) || "Triage Care" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -24,6 +29,33 @@
   </head>
 
   <body>
-    <%= yield %>
+    <% if authenticated? %> <%# comprobar si hay alguna sesion iniciada %>
+                            <%# authenticated? es un metodo creado por el %>
+                            <%# generador por convencion los metodos terminados %>
+                            <%# en ? devuelven si o no %>
+                            <%# Entonces en la pantalla de login no hay sesion %>
+                            <%# por lo que no aparece menu %>
+      <nav>
+        <%= link_to "Panel", root_path %> <%# link_to es un helper de Rails recibe %>
+                                          <%# texto que se ve y a donde lleva %>
+                                          <%# root_path devuelve la direccion "/" Rails %>
+                                          <%# crea de manera automatica un metodo algo_path %>
+                                          <%# por cada ruta de routes.rb, como se puso: %>
+                                          <%# root "panel#index" existe root_path %>
+          <%= Current.user.email_address %> <%# obtiene el correo del usuario de sesion%>
+        <%= button_to "Cerrar sesion", session_path, method: :delete %> <%# sesion_path direccion %>
+                                                                        <%# method: :delet indica tipo %>
+                                                                        <%# de peticion a enviar %>
+      </nav>
+      <hr>
+    <% end %>
+
+    <% flash.each do |tipo, mensaje| %>
+      <p class="flash-<%= tipo %>"><%= mensaje %></p>
+    <% end %>
+
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>
