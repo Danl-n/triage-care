@@ -62,12 +62,22 @@ class AtencionesControllerTest < ActionDispatch::IntegrationTest
     assert @atencion.reload.finalizada?
   end
 
-  test "elimina una atención" do
+  test "elimina una atención sin tomas" do
+    atencion = Atencion.create!(datos_validos)
+
     assert_difference("Atencion.count", -1) do
-      delete atencion_path(@atencion)
+      delete atencion_path(atencion)
     end
 
     assert_redirected_to atenciones_path
+  end
+
+  test "no elimina una atención que ya tiene tomas" do
+    assert_no_difference("Atencion.count") do
+      delete atencion_path(@atencion)
+    end
+
+    assert_redirected_to atencion_path(@atencion)
   end
 
   test "no elimina un paciente con atenciones y muestra el motivo" do

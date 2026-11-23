@@ -1,0 +1,12 @@
+# Primera toma de la atención de Valentina: son los signos del ejemplo 2 del enunciado.
+valentina_primera:
+  atencion: valentina_en_espera
+  registrada_por: one
+  tomada_en: <%= 35.minutes.ago.utc.to_fs(:db) %>
+  frecuencia_respiratoria: 18
+  spo2: 97
+  con_oxigeno: false
+  presion_sistolica: 88
+  pulso: 80
+  conciencia: A
+  temperatura: 36.8

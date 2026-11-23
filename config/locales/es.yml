@@ -43,6 +43,9 @@ es:
       atencion:
         one: Atención
         other: Atenciones
+      toma:
+        one: Toma de signos
+        other: Tomas de signos
 
     attributes:
       provincia:
@@ -131,6 +134,18 @@ es:
         hora_llegada: Hora de llegada
         estado: Estado
         usa_escala_spo2_2: Usa escala 2 de SpO2
+        tomas: tomas de signos
+      toma:
+        atencion: Atención
+        registrada_por: Registrada por
+        tomada_en: Hora de la toma
+        frecuencia_respiratoria: Frecuencia respiratoria
+        spo2: SpO2
+        con_oxigeno: Con oxígeno suplementario
+        presion_sistolica: Presión sistólica
+        pulso: Pulso
+        conciencia: Conciencia
+        temperatura: Temperatura
 
     errors:
       messages:
@@ -147,6 +162,7 @@ es:
         insumos_repetidos: No se puede repetir el mismo insumo en un motivo de consulta
         no_futura: no puede ser una fecha futura
         atencion_abierta: ya tiene una atención abierta (en espera o en atención)
+        atencion_cerrada: La atención está finalizada o derivada y no admite nuevas tomas
 
   enums:
     turno:
@@ -168,3 +184,10 @@ es:
         en_atencion: En atención
         finalizada: Finalizada
         derivada: Derivada
+    toma:
+      conciencia:
+        A: "A · Alerta"
+        C: "C · Confusión nueva"
+        V: "V · Responde a la voz"
+        P: "P · Responde al dolor"
+        U: "U · No responde"

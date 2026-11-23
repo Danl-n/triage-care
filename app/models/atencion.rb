@@ -3,6 +3,7 @@ class Atencion < ApplicationRecord
 
   belongs_to :paciente
   belongs_to :motivo_consulta
+  has_many :tomas, dependent: :restrict_with_error
 
   enum :estado, { en_espera: "en_espera", en_atencion: "en_atencion",
                   finalizada: "finalizada", derivada: "derivada" }, validate: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_23_234306) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_23_234532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -166,6 +166,29 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_23_234306) do
     t.index ["nombre"], name: "index_tipos_red_on_nombre", unique: true
   end
 
+  create_table "tomas", force: :cascade do |t|
+    t.bigint "atencion_id", null: false
+    t.bigint "registrada_por_id", null: false
+    t.datetime "tomada_en", null: false
+    t.integer "frecuencia_respiratoria", null: false
+    t.integer "spo2", null: false
+    t.boolean "con_oxigeno", default: false, null: false
+    t.integer "presion_sistolica", null: false
+    t.integer "pulso", null: false
+    t.string "conciencia", limit: 1, null: false
+    t.decimal "temperatura", precision: 3, scale: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["atencion_id"], name: "index_tomas_on_atencion_id"
+    t.index ["registrada_por_id"], name: "index_tomas_on_registrada_por_id"
+    t.check_constraint "conciencia::text = ANY (ARRAY['A'::character varying, 'C'::character varying, 'V'::character varying, 'P'::character varying, 'U'::character varying]::text[])", name: "tomas_conciencia_valida"
+    t.check_constraint "frecuencia_respiratoria >= 0 AND frecuencia_respiratoria <= 80", name: "tomas_fr_en_rango"
+    t.check_constraint "presion_sistolica >= 40 AND presion_sistolica <= 300", name: "tomas_pas_en_rango"
+    t.check_constraint "pulso >= 20 AND pulso <= 250", name: "tomas_pulso_en_rango"
+    t.check_constraint "spo2 >= 50 AND spo2 <= 100", name: "tomas_spo2_en_rango"
+    t.check_constraint "temperatura >= 30.0 AND temperatura <= 45.0", name: "tomas_temperatura_en_rango"
+  end
+
   create_table "turnos", force: :cascade do |t|
     t.bigint "medico_id", null: false
     t.datetime "inicio", null: false
@@ -199,5 +222,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_23_234306) do
   add_foreign_key "motivos_consulta", "especialidades"
   add_foreign_key "pacientes", "cantones"
   add_foreign_key "sessions", "users"
+  add_foreign_key "tomas", "atenciones"
+  add_foreign_key "tomas", "users", column: "registrada_por_id"
   add_foreign_key "turnos", "medicos"
 end
