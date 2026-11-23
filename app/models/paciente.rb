@@ -1,5 +1,6 @@
 class Paciente < ApplicationRecord
   belongs_to :canton
+  has_many :atenciones, dependent: :restrict_with_error
 
   enum :sexo, { masculino: "masculino", femenino: "femenino" }, validate: true
 
@@ -21,6 +22,11 @@ class Paciente < ApplicationRecord
 
   def nombre_completo
     "#{apellidos} #{nombres}"
+  end
+
+  # Texto del dropdown de pacientes: la cédula distingue a dos personas con el mismo nombre.
+  def cedula_y_nombre
+    "#{cedula} · #{nombre_completo}"
   end
 
   private

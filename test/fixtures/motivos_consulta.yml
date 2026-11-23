@@ -4,3 +4,10 @@ herida:
   requiere_quirofano: false
   requiere_anestesista: false
   duracion_estimada_minutos: 30
+
+fiebre:
+  nombre: Fiebre en menor de 5 años
+  especialidad: emergencias
+  requiere_quirofano: false
+  requiere_anestesista: false
+  duracion_estimada_minutos: 30

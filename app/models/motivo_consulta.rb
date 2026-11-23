@@ -2,6 +2,7 @@ class MotivoConsulta < ApplicationRecord
   belongs_to :especialidad
   has_many :insumos_requeridos, dependent: :destroy
   has_many :insumos, through: :insumos_requeridos
+  has_many :atenciones, dependent: :restrict_with_error
 
   accepts_nested_attributes_for :insumos_requeridos, allow_destroy: true, reject_if: :all_blank
 

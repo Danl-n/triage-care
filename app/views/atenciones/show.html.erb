@@ -1,0 +1,17 @@
+<% content_for :title, "Atención de #{@atencion.paciente.nombre_completo}" %>
+
+<h1>Atención de <%= @atencion.paciente.nombre_completo %></h1>
+
+<p><strong><%= Paciente.human_attribute_name(:cedula) %>:</strong> <%= @atencion.paciente.cedula %></p>
+<p><strong><%= Atencion.human_attribute_name(:motivo_consulta) %>:</strong> <%= @atencion.motivo_consulta.nombre %></p>
+<p><strong><%= Atencion.human_attribute_name(:hora_llegada) %>:</strong> <%= fecha_hora(@atencion.hora_llegada) %></p>
+<p><strong><%= Atencion.human_attribute_name(:estado) %>:</strong> <%= texto_enum(Atencion, :estado, @atencion.estado) %></p>
+<p><strong>Escala de SpO2:</strong> <%= @atencion.usa_escala_spo2_2? ? "Escala 2" : "Escala 1" %></p>
+
+<p>
+  <%= link_to "Editar", edit_atencion_path(@atencion) %> |
+  <%= link_to "Volver al listado", atenciones_path %>
+</p>
+
+<%= button_to "Eliminar", @atencion, method: :delete,
+      form: { data: { turbo_confirm: "¿Seguro que deseas eliminar esta atención?" } } %>

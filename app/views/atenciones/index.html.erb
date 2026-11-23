@@ -1,0 +1,31 @@
+<% content_for :title, "Atenciones" %>
+
+<h1>Atenciones</h1>
+
+<p><%= link_to "Nueva atención", new_atencion_path %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= Atencion.human_attribute_name(:hora_llegada) %></th>
+      <th><%= Atencion.human_attribute_name(:paciente) %></th>
+      <th><%= Atencion.human_attribute_name(:motivo_consulta) %></th>
+      <th><%= Atencion.human_attribute_name(:estado) %></th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @atenciones.each do |atencion| %>
+      <tr>
+        <td><%= fecha_hora(atencion.hora_llegada) %></td>
+        <td><%= atencion.paciente.cedula_y_nombre %></td>
+        <td><%= atencion.motivo_consulta.nombre %></td>
+        <td><%= texto_enum(Atencion, :estado, atencion.estado) %></td>
+        <td>
+          <%= link_to "Ver", atencion %>
+          <%= link_to "Editar", edit_atencion_path(atencion) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

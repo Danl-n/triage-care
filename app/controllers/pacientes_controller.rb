@@ -34,8 +34,11 @@ class PacientesController < ApplicationController
   end
 
   def destroy
-    @paciente.destroy!
-    redirect_to pacientes_path, notice: "Paciente eliminado correctamente.", status: :see_other
+    if @paciente.destroy
+      redirect_to pacientes_path, notice: "Paciente eliminado correctamente.", status: :see_other
+    else
+      redirect_to @paciente, alert: @paciente.errors.full_messages.to_sentence, status: :see_other
+    end
   end
 
   private

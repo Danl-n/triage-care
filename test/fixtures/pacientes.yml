@@ -5,3 +5,11 @@ jose:
   fecha_nacimiento: 1985-03-14
   sexo: masculino
   canton: quito
+
+valentina:
+  cedula: "1723450985"
+  nombres: Valentina
+  apellidos: Cevallos Mora
+  fecha_nacimiento: 2021-05-09
+  sexo: femenino
+  canton: quito

@@ -1,0 +1,7 @@
+# Las horas son relativas al momento de correr las pruebas, para que nunca queden "en el futuro".
+valentina_en_espera:
+  paciente: valentina
+  motivo_consulta: fiebre
+  hora_llegada: <%= 40.minutes.ago.utc.to_fs(:db) %>
+  estado: en_espera
+  usa_escala_spo2_2: false

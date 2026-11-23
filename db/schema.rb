@@ -10,9 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_08_061159) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_23_234306) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "atenciones", force: :cascade do |t|
+    t.bigint "paciente_id", null: false
+    t.bigint "motivo_consulta_id", null: false
+    t.datetime "hora_llegada", null: false
+    t.string "estado", default: "en_espera", null: false
+    t.boolean "usa_escala_spo2_2", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estado", "hora_llegada"], name: "index_atenciones_on_estado_and_hora_llegada"
+    t.index ["motivo_consulta_id"], name: "index_atenciones_on_motivo_consulta_id"
+    t.index ["paciente_id"], name: "index_atenciones_abierta_unica_por_paciente", unique: true, where: "((estado)::text = ANY ((ARRAY['en_espera'::character varying, 'en_atencion'::character varying])::text[]))"
+    t.index ["paciente_id"], name: "index_atenciones_on_paciente_id"
+    t.check_constraint "estado::text = ANY (ARRAY['en_espera'::character varying, 'en_atencion'::character varying, 'finalizada'::character varying, 'derivada'::character varying]::text[])", name: "atenciones_estado_valido"
+  end
 
   create_table "cantones", force: :cascade do |t|
     t.string "nombre", null: false
@@ -174,6 +189,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_08_061159) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  add_foreign_key "atenciones", "motivos_consulta"
+  add_foreign_key "atenciones", "pacientes"
   add_foreign_key "cantones", "provincias"
   add_foreign_key "hospitales_referencia", "tipos_red"
   add_foreign_key "insumos_requeridos", "insumos"

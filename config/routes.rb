@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root "panel#index"
 
+  # Triaje (etapa 1 del core)
+  resources :atenciones
+
   # Ubicación (dropdown dependiente Provincia → Cantón)
   resources :provincias do
     get :cantones, on: :member

@@ -1,0 +1,27 @@
+<%= form_with(model: atencion) do |form| %>
+  <%= render "shared/errores", registro: atencion %>
+
+  <div class="campo">
+    <%= form.label :paciente_id %>
+    <%= form.collection_select :paciente_id, Paciente.order(:apellidos, :nombres), :id, :cedula_y_nombre,
+          { prompt: "Seleccione un paciente" } %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :motivo_consulta_id %>
+    <%= form.collection_select :motivo_consulta_id, MotivoConsulta.order(:nombre), :id, :nombre,
+          { prompt: "Seleccione un motivo de consulta" } %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :hora_llegada %>
+    <%= form.datetime_field :hora_llegada %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :estado %>
+    <%= form.select :estado, opciones_enum(Atencion, :estado) %>
+  </div>
+
+  <%= form.submit "Guardar" %>
+<% end %>

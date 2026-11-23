@@ -41,8 +41,11 @@ class MotivosConsultaController < ApplicationController
   end
 
   def destroy
-    @motivo_consulta.destroy!
-    redirect_to motivos_consulta_path, notice: "Motivo de consulta eliminado correctamente.", status: :see_other
+    if @motivo_consulta.destroy
+      redirect_to motivos_consulta_path, notice: "Motivo de consulta eliminado correctamente.", status: :see_other
+    else
+      redirect_to @motivo_consulta, alert: @motivo_consulta.errors.full_messages.to_sentence, status: :see_other
+    end
   end
 
   private

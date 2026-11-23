@@ -40,6 +40,9 @@ es:
       paciente:
         one: Paciente
         other: Pacientes
+      atencion:
+        one: Atención
+        other: Atenciones
 
     attributes:
       provincia:
@@ -86,6 +89,7 @@ es:
         requiere_anestesista: Requiere anestesista
         duracion_estimada_minutos: Duración estimada (minutos)
         insumos_requeridos: Insumos requeridos
+        atenciones: atenciones
       motivo_consulta/insumos_requeridos:
         insumo: Insumo
         cantidad: Cantidad del insumo
@@ -118,6 +122,15 @@ es:
         canton: Cantón
         canton_id: Cantón
         provincia_id: Provincia
+        atenciones: atenciones
+      atencion:
+        paciente: Paciente
+        paciente_id: Paciente
+        motivo_consulta: Motivo de consulta
+        motivo_consulta_id: Motivo de consulta
+        hora_llegada: Hora de llegada
+        estado: Estado
+        usa_escala_spo2_2: Usa escala 2 de SpO2
 
     errors:
       messages:
@@ -133,6 +146,7 @@ es:
         turno_cruzado: El médico ya tiene otro turno que se cruza con este horario
         insumos_repetidos: No se puede repetir el mismo insumo en un motivo de consulta
         no_futura: no puede ser una fecha futura
+        atencion_abierta: ya tiene una atención abierta (en espera o en atención)
 
   enums:
     turno:
@@ -148,3 +162,9 @@ es:
       sexo:
         masculino: Masculino
         femenino: Femenino
+    atencion:
+      estado:
+        en_espera: En espera
+        en_atencion: En atención
+        finalizada: Finalizada
+        derivada: Derivada
