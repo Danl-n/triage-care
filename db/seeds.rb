@@ -3,7 +3,7 @@
 
 # --- Usuario administrador ---------------------------------------------------
 # La contraseña se lee del entorno y no tiene valor por defecto (fail fast).
-User.find_or_create_by!(email_address: ENV.fetch("TRIAGE_CARE_ADMIN_EMAIL", "admin@triagecare.ec")) do |user|
+admin = User.find_or_create_by!(email_address: ENV.fetch("TRIAGE_CARE_ADMIN_EMAIL", "admin@triagecare.ec")) do |user|
   user.password = ENV.fetch("TRIAGE_CARE_ADMIN_PASSWORD")
 end
 
@@ -160,4 +160,55 @@ end
     nuevo.sexo = sexo
     nuevo.canton = Provincia.find_by!(codigo: codigo_provincia).cantones.find_by!(nombre: canton)
   end
+end
+
+# --- Atenciones y tomas de ejemplo (etapa 1: valoración clínica) -------------
+# Las horas son relativas al momento del seed, así que solo se crean si no hay ninguna atención.
+# Cada toma pasa por Triage::ValoradorToma, igual que cuando se registra desde la interfaz.
+if Atencion.none?
+  ahora = Time.current.change(sec: 0)
+  valorador = Triage::ValoradorToma.new
+
+  abrir_atencion = lambda do |cedula, motivo, minutos_desde_llegada, escala_2: false|
+    Atencion.create!(paciente: Paciente.find_by!(cedula: cedula),
+                     motivo_consulta: MotivoConsulta.find_by!(nombre: motivo),
+                     hora_llegada: ahora - minutos_desde_llegada.minutes,
+                     usa_escala_spo2_2: escala_2)
+  end
+
+  registrar_toma = lambda do |atencion, minutos_despues_de_llegar, signos|
+    toma = atencion.tomas.new(signos.merge(registrada_por: admin,
+                                           tomada_en: atencion.hora_llegada + minutos_despues_de_llegar.minutes))
+    valorador.valorar(toma).save!
+  end
+
+  signos = ->(fr, spo2, oxigeno, pas, pulso, conciencia, temperatura) do
+    { frecuencia_respiratoria: fr, spo2: spo2, con_oxigeno: oxigeno, presion_sistolica: pas,
+      pulso: pulso, conciencia: conciencia, temperatura: temperatura }
+  end
+
+  # Ejemplo 1 del enunciado: NEWS2 7 → Alto.
+  jose = abrir_atencion.call("1304567124", "Dolor torácico agudo", 50)
+  registrar_toma.call(jose, 5, signos.call(23, 94, false, 105, 112, "A", 38.4))
+
+  # Ejemplo 2 (NEWS2 3 con la PAS en 3 → Bajo-medio) y ejemplo 3 (segunda toma con 5 → Medio y alerta).
+  ana = abrir_atencion.call("0918765439", "Fractura de extremidad", 90)
+  registrar_toma.call(ana, 10, signos.call(18, 97, false, 88, 80, "A", 36.8))
+  registrar_toma.call(ana, 70, signos.call(22, 95, false, 105, 95, "A", 37.0))
+
+  # Signos normales: NEWS2 0 → Bajo.
+  luis = abrir_atencion.call("0603456716", "Herida cortante", 30)
+  registrar_toma.call(luis, 5, signos.call(16, 98, false, 125, 76, "A", 36.7))
+
+  # Escala 2 de SpO2: 90 % con oxígeno vale 0 (en la escala 1 valdría 3). NEWS2 4 → Bajo.
+  rosa = abrir_atencion.call("1710101013", "Dolor torácico agudo", 25, escala_2: true)
+  registrar_toma.call(rosa, 5, signos.call(22, 90, true, 120, 88, "A", 37.2))
+
+  # Recién llegada, todavía sin toma: aparece en "Pendientes de primera toma".
+  abrir_atencion.call("1723450985", "Fiebre en menor de 5 años", 8)
+
+  # Atención de ayer ya finalizada: no aparece en la cola y no admite nuevas tomas.
+  carmen = abrir_atencion.call("0103030300", "Herida cortante", 26 * 60)
+  registrar_toma.call(carmen, 10, signos.call(20, 96, false, 135, 92, "A", 37.5))
+  carmen.update!(estado: "finalizada")
 end
