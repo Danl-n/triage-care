@@ -1,0 +1,86 @@
+<% content_for :title, "Cola priorizada" %>
+
+<h1>Cola priorizada</h1>
+
+<p>
+  <small>
+    Atenciones en espera, ordenadas por nivel de riesgo, minutos de espera excedida y hora de llegada.
+    Calculada a las <%= fecha_hora(Time.current) %>.
+  </small>
+</p>
+
+<p><%= link_to "Nueva atención", new_atencion_path %></p>
+
+<% if @sin_valorar.any? %>
+  <h2>Pendientes de primera toma (<%= @sin_valorar.size %>)</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th><%= Atencion.human_attribute_name(:hora_llegada) %></th>
+        <th><%= Atencion.human_attribute_name(:paciente) %></th>
+        <th><%= Atencion.human_attribute_name(:motivo_consulta) %></th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @sin_valorar.each do |atencion| %>
+        <tr>
+          <td><%= fecha_hora(atencion.hora_llegada) %></td>
+          <td><%= atencion.paciente.cedula_y_nombre %></td>
+          <td><%= atencion.motivo_consulta.nombre %></td>
+          <td><%= link_to "Tomar signos", new_atencion_toma_path(atencion) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<h2>En espera (<%= @cola.size %>)</h2>
+
+<% if @cola.empty? %>
+  <p>No hay pacientes valorados en espera.</p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th><%= Toma.human_attribute_name(:nivel_riesgo) %></th>
+        <th><%= Toma.human_attribute_name(:puntaje_total) %></th>
+        <th><%= Atencion.human_attribute_name(:paciente) %></th>
+        <th><%= Atencion.human_attribute_name(:motivo_consulta) %></th>
+        <th><%= Atencion.human_attribute_name(:hora_llegada) %></th>
+        <th><%= Toma.human_attribute_name(:espera_maxima_hasta) %></th>
+        <th>Espera excedida (min)</th>
+        <th><%= Toma.human_attribute_name(:proxima_toma) %></th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cola.each.with_index(1) do |atencion, posicion| %>
+        <% toma = atencion.ultima_toma %>
+        <tr>
+          <td><%= posicion %></td>
+          <td>
+            <%= toma.nivel_riesgo.nombre %>
+            <% if toma.alerta_deterioro %><br><small>Alerta de deterioro</small><% end %>
+          </td>
+          <td><%= toma.puntaje_total %></td>
+          <td><%= atencion.paciente.cedula_y_nombre %></td>
+          <td><%= atencion.motivo_consulta.nombre %></td>
+          <td><%= fecha_hora(atencion.hora_llegada) %></td>
+          <td><%= fecha_hora(toma.espera_maxima_hasta) %></td>
+          <td><%= @priorizador.minutos_excedidos(atencion) %></td>
+          <td>
+            <%= fecha_hora(toma.proxima_toma) %>
+            <% if toma.proxima_toma.past? %><br><small>Vencida</small><% end %>
+          </td>
+          <td>
+            <%= link_to "Ver", atencion %>
+            <%= link_to "Nueva toma", new_atencion_toma_path(atencion) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -61,6 +61,29 @@ class AtencionTest < ActiveSupport::TestCase
     assert_not atencion_valida(estado: "derivada").abierta?
   end
 
+  test "expone la prioridad y la espera máxima de su última toma (para la cola)" do
+    atencion = atenciones(:valentina_en_espera)
+
+    assert_equal tomas(:valentina_primera), atencion.ultima_toma
+    assert_equal niveles_riesgo(:bajo_medio).prioridad, atencion.prioridad_riesgo
+    assert_equal tomas(:valentina_primera).espera_maxima_hasta, atencion.espera_maxima_hasta
+  end
+
+  test "ultima_toma es la más reciente también cuando se precarga con includes" do
+    atencion = atenciones(:valentina_en_espera)
+    segunda = atencion.tomas.new(SignosDePrueba::EJEMPLO_2.to_h.merge(registrada_por: users(:one)))
+    Triage::ValoradorToma.new.valorar(segunda).save!
+
+    assert_equal segunda, Atencion.includes(:ultima_toma).find(atencion.id).ultima_toma
+  end
+
+  test "sin tomas no tiene prioridad ni espera máxima" do
+    atencion = atencion_valida
+
+    assert_nil atencion.prioridad_riesgo
+    assert_nil atencion.espera_maxima_hasta
+  end
+
   test "no se puede eliminar un paciente ni un motivo de consulta con atenciones" do
     assert_not pacientes(:valentina).destroy
     assert_not motivos_consulta(:fiebre).destroy

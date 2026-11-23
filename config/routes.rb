@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root "panel#index"
 
   # Triaje (etapa 1 del core)
+  get "cola", to: "cola#index", as: :cola
   # Las tomas cuelgan de su atención (/atenciones/:atencion_id/tomas) y no se editan ni se borran.
   resources :atenciones do
     resources :tomas, only: %i[ new create show ]

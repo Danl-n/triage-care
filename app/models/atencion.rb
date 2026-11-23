@@ -4,6 +4,7 @@ class Atencion < ApplicationRecord
   belongs_to :paciente
   belongs_to :motivo_consulta
   has_many :tomas, dependent: :restrict_with_error
+  has_one :ultima_toma, -> { order(tomada_en: :desc) }, class_name: "Toma"
 
   enum :estado, { en_espera: "en_espera", en_atencion: "en_atencion",
                   finalizada: "finalizada", derivada: "derivada" }, validate: true
@@ -17,6 +18,16 @@ class Atencion < ApplicationRecord
 
   def abierta?
     estado.in?(ESTADOS_ABIERTOS)
+  end
+
+  # prioridad_riesgo y espera_maxima_hasta (junto con hora_llegada) son lo que necesita
+  # Triage::PriorizadorCola. Salen de la última toma; son nil si todavía no hay tomas.
+  def prioridad_riesgo
+    ultima_toma&.nivel_riesgo&.prioridad
+  end
+
+  def espera_maxima_hasta
+    ultima_toma&.espera_maxima_hasta
   end
 
   private

@@ -23,6 +23,7 @@
     <% if authenticated? %>
       <nav class="menu">
         <%= link_to "TriageCare · Panel", root_path %>
+        <%= link_to "Cola priorizada", cola_path %>
         <span class="usuario"><%= Current.user.email_address %></span>
         <%= button_to "Cerrar sesión", session_path, method: :delete %>
       </nav>
