@@ -1,4 +1,6 @@
 class NivelRiesgo < ApplicationRecord
+  has_many :tomas, dependent: :restrict_with_error
+
   # Los 4 niveles se cargan por seed; desde el admin solo se editan los tiempos.
   validates :nombre, :criterio, presence: true
   validates :prioridad, uniqueness: true

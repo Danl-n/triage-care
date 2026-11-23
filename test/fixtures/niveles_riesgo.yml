@@ -6,6 +6,22 @@ alto:
   frecuencia_toma_minutos: 15
   limite_derivacion_minutos: 30
 
+medio:
+  nombre: Medio
+  prioridad: 2
+  criterio: NEWS2 de 5 a 6
+  espera_maxima_minutos: 15
+  frecuencia_toma_minutos: 60
+  limite_derivacion_minutos: 60
+
+bajo_medio:
+  nombre: Bajo-medio
+  prioridad: 3
+  criterio: Algún parámetro individual con 3 puntos
+  espera_maxima_minutos: 30
+  frecuencia_toma_minutos: 60
+  limite_derivacion_minutos: 120
+
 bajo:
   nombre: Bajo
   prioridad: 4

@@ -116,6 +116,7 @@ es:
         espera_maxima_minutos: Espera máxima (minutos)
         frecuencia_toma_minutos: Frecuencia de toma de signos (minutos)
         limite_derivacion_minutos: Límite para derivación (minutos)
+        tomas: tomas de signos
       paciente:
         cedula: Cédula
         nombres: Nombres
@@ -146,6 +147,12 @@ es:
         pulso: Pulso
         conciencia: Conciencia
         temperatura: Temperatura
+        puntaje_total: NEWS2
+        parametro_en_3: Algún parámetro con 3 puntos
+        nivel_riesgo: Nivel de riesgo
+        espera_maxima_hasta: Espera máxima hasta
+        proxima_toma: Próxima toma
+        alerta_deterioro: Alerta de deterioro
 
     errors:
       messages:

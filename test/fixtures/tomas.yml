@@ -1,4 +1,7 @@
-# Primera toma de la atención de Valentina: son los signos del ejemplo 2 del enunciado.
+# Primera toma de la atención de Valentina: son los signos del ejemplo 2 del enunciado
+# (NEWS2 = 3, con la presión sistólica en 3 → Bajo-medio).
+# Llegada hace 40 min + 30 min de espera máxima = hace 10 min (ya excedida).
+# Toma hace 35 min + 60 min de frecuencia = dentro de 25 min.
 valentina_primera:
   atencion: valentina_en_espera
   registrada_por: one
@@ -10,3 +13,16 @@ valentina_primera:
   pulso: 80
   conciencia: A
   temperatura: 36.8
+  puntaje_frecuencia_respiratoria: 0
+  puntaje_spo2: 0
+  puntaje_con_oxigeno: 0
+  puntaje_presion_sistolica: 3
+  puntaje_pulso: 0
+  puntaje_conciencia: 0
+  puntaje_temperatura: 0
+  puntaje_total: 3
+  parametro_en_3: true
+  nivel_riesgo: bajo_medio
+  espera_maxima_hasta: <%= 10.minutes.ago.utc.to_fs(:db) %>
+  proxima_toma: <%= 25.minutes.from_now.utc.to_fs(:db) %>
+  alerta_deterioro: false

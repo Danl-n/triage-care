@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_23_234532) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_23_235054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -179,7 +179,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_23_234532) do
     t.decimal "temperatura", precision: 3, scale: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "puntaje_frecuencia_respiratoria", null: false
+    t.integer "puntaje_spo2", null: false
+    t.integer "puntaje_con_oxigeno", null: false
+    t.integer "puntaje_presion_sistolica", null: false
+    t.integer "puntaje_pulso", null: false
+    t.integer "puntaje_conciencia", null: false
+    t.integer "puntaje_temperatura", null: false
+    t.integer "puntaje_total", null: false
+    t.boolean "parametro_en_3", null: false
+    t.bigint "nivel_riesgo_id", null: false
+    t.datetime "espera_maxima_hasta", null: false
+    t.datetime "proxima_toma", null: false
+    t.boolean "alerta_deterioro", null: false
     t.index ["atencion_id"], name: "index_tomas_on_atencion_id"
+    t.index ["nivel_riesgo_id"], name: "index_tomas_on_nivel_riesgo_id"
     t.index ["registrada_por_id"], name: "index_tomas_on_registrada_por_id"
     t.check_constraint "conciencia::text = ANY (ARRAY['A'::character varying, 'C'::character varying, 'V'::character varying, 'P'::character varying, 'U'::character varying]::text[])", name: "tomas_conciencia_valida"
     t.check_constraint "frecuencia_respiratoria >= 0 AND frecuencia_respiratoria <= 80", name: "tomas_fr_en_rango"
@@ -223,6 +237,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_23_234532) do
   add_foreign_key "pacientes", "cantones"
   add_foreign_key "sessions", "users"
   add_foreign_key "tomas", "atenciones"
+  add_foreign_key "tomas", "niveles_riesgo"
   add_foreign_key "tomas", "users", column: "registrada_por_id"
   add_foreign_key "turnos", "medicos"
 end
