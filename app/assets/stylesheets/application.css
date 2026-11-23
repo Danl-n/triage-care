@@ -70,5 +70,14 @@ input[type="submit"], button {
 fieldset { border: 1px solid #d9e2ec; margin-bottom: 1rem; }
 fieldset select, fieldset input[type="number"] { min-width: 0; }
 
+.alerta {
+  background: #fff4e5;
+  color: #8a4b00;
+  border: 1px solid #f5c48a;
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+}
+
 .secciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
 .secciones section { background: #fff; border: 1px solid #d9e2ec; border-radius: 6px; padding: 0 1rem; }

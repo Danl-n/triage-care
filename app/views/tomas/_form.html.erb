@@ -1,0 +1,46 @@
+<%# model: [atencion, toma] → el formulario se envía a POST /atenciones/:atencion_id/tomas %>
+<%= form_with(model: [ atencion, toma ]) do |form| %>
+  <%= render "shared/errores", registro: toma %>
+
+  <div class="campo">
+    <%= form.label :frecuencia_respiratoria %>
+    <%= form.number_field :frecuencia_respiratoria, min: 0, max: 80, step: 1 %>
+    <small>respiraciones por minuto (0 a 80)</small>
+  </div>
+
+  <div class="campo">
+    <%= form.label :spo2 %>
+    <%= form.number_field :spo2, min: 50, max: 100, step: 1 %>
+    <small>% (50 a 100)</small>
+  </div>
+
+  <div class="campo campo-check">
+    <%= form.check_box :con_oxigeno %>
+    <%= form.label :con_oxigeno %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :presion_sistolica %>
+    <%= form.number_field :presion_sistolica, min: 40, max: 300, step: 1 %>
+    <small>mmHg (40 a 300)</small>
+  </div>
+
+  <div class="campo">
+    <%= form.label :pulso %>
+    <%= form.number_field :pulso, min: 20, max: 250, step: 1 %>
+    <small>latidos por minuto (20 a 250)</small>
+  </div>
+
+  <div class="campo">
+    <%= form.label :conciencia %>
+    <%= form.select :conciencia, opciones_enum(Toma, :conciencia), { prompt: "Seleccione" } %>
+  </div>
+
+  <div class="campo">
+    <%= form.label :temperatura %>
+    <%= form.number_field :temperatura, min: 30, max: 45, step: 0.1 %>
+    <small>°C, con un decimal (30,0 a 45,0)</small>
+  </div>
+
+  <%= form.submit "Registrar y calcular NEWS2" %>
+<% end %>

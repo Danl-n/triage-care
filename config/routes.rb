@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   root "panel#index"
 
   # Triaje (etapa 1 del core)
-  resources :atenciones
+  # Las tomas cuelgan de su atención (/atenciones/:atencion_id/tomas) y no se editan ni se borran.
+  resources :atenciones do
+    resources :tomas, only: %i[ new create show ]
+  end
 
   # Ubicación (dropdown dependiente Provincia → Cantón)
   resources :provincias do

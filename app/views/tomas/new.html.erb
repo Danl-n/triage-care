@@ -1,0 +1,12 @@
+<% content_for :title, "Nueva toma de signos" %>
+
+<h1>Nueva toma de signos</h1>
+
+<p>
+  <strong><%= Atencion.human_attribute_name(:paciente) %>:</strong> <%= @atencion.paciente.cedula_y_nombre %> ·
+  <strong>Escala de SpO2:</strong> <%= escala_spo2(@atencion) %>
+</p>
+
+<%= render "form", atencion: @atencion, toma: @toma %>
+
+<p><%= link_to "Volver a la atención", @atencion %></p>

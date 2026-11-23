@@ -1,0 +1,63 @@
+<% content_for :title, "Resultado de la toma" %>
+
+<h1>Resultado de la toma de signos</h1>
+
+<p>
+  <strong><%= Atencion.human_attribute_name(:paciente) %>:</strong> <%= @atencion.paciente.cedula_y_nombre %><br>
+  <strong><%= Toma.human_attribute_name(:tomada_en) %>:</strong> <%= fecha_hora(@toma.tomada_en) %> ·
+  <strong><%= Toma.human_attribute_name(:registrada_por) %>:</strong> <%= @toma.registrada_por.email_address %> ·
+  <strong>Escala de SpO2:</strong> <%= escala_spo2(@atencion) %>
+</p>
+
+<% if @toma.alerta_deterioro %>
+  <p class="alerta" role="alert">
+    <%= Toma.human_attribute_name(:alerta_deterioro) %>: el NEWS2 subió 2 o más puntos frente a la toma anterior.
+  </p>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parámetro</th>
+      <th>Valor</th>
+      <th>Puntaje</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% [
+         [ :frecuencia_respiratoria, "#{@toma.frecuencia_respiratoria} rpm" ],
+         [ :spo2, "#{@toma.spo2} %" ],
+         [ :con_oxigeno, si_no(@toma.con_oxigeno) ],
+         [ :presion_sistolica, "#{@toma.presion_sistolica} mmHg" ],
+         [ :pulso, "#{@toma.pulso} lpm" ],
+         [ :conciencia, texto_enum(Toma, :conciencia, @toma.conciencia) ],
+         [ :temperatura, temperatura(@toma.temperatura) ]
+       ].each do |parametro, valor| %>
+      <tr>
+        <td><%= Toma.human_attribute_name(parametro) %></td>
+        <td><%= valor %></td>
+        <td><%= @toma.public_send("puntaje_#{parametro}") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="2"><%= Toma.human_attribute_name(:puntaje_total) %></th>
+      <th><%= @toma.puntaje_total %></th>
+    </tr>
+  </tfoot>
+</table>
+
+<p>
+  <strong><%= Toma.human_attribute_name(:nivel_riesgo) %>:</strong>
+  <%= @toma.nivel_riesgo.nombre %> <small>(<%= @toma.nivel_riesgo.criterio %>)</small>
+</p>
+<p><strong><%= Toma.human_attribute_name(:espera_maxima_hasta) %>:</strong> <%= fecha_hora(@toma.espera_maxima_hasta) %></p>
+<p><strong><%= Toma.human_attribute_name(:proxima_toma) %>:</strong> <%= fecha_hora(@toma.proxima_toma) %></p>
+
+<p>
+  <%= link_to "Volver a la atención", @atencion %>
+  <% if @atencion.abierta? %>
+    | <%= link_to "Nueva toma de signos", new_atencion_toma_path(@atencion) %>
+  <% end %>
+</p>

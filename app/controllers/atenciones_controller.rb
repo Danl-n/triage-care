@@ -6,6 +6,7 @@ class AtencionesController < ApplicationController
   end
 
   def show
+    @tomas = @atencion.tomas.cronologicas.includes(:nivel_riesgo)
   end
 
   def new

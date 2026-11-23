@@ -6,7 +6,56 @@
 <p><strong><%= Atencion.human_attribute_name(:motivo_consulta) %>:</strong> <%= @atencion.motivo_consulta.nombre %></p>
 <p><strong><%= Atencion.human_attribute_name(:hora_llegada) %>:</strong> <%= fecha_hora(@atencion.hora_llegada) %></p>
 <p><strong><%= Atencion.human_attribute_name(:estado) %>:</strong> <%= texto_enum(Atencion, :estado, @atencion.estado) %></p>
-<p><strong>Escala de SpO2:</strong> <%= @atencion.usa_escala_spo2_2? ? "Escala 2" : "Escala 1" %></p>
+<p><strong>Escala de SpO2:</strong> <%= escala_spo2(@atencion) %></p>
+
+<h2>Historial de tomas de signos (<%= @tomas.size %>)</h2>
+
+<% if @atencion.abierta? %>
+  <p><%= link_to "Nueva toma de signos", new_atencion_toma_path(@atencion) %></p>
+<% else %>
+  <p><small>La atención está cerrada: no admite nuevas tomas.</small></p>
+<% end %>
+
+<% if @tomas.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th><%= Toma.human_attribute_name(:tomada_en) %></th>
+        <th>FR</th>
+        <th>SpO2</th>
+        <th>O2</th>
+        <th>PAS</th>
+        <th>Pulso</th>
+        <th>Conc.</th>
+        <th>T°</th>
+        <th><%= Toma.human_attribute_name(:puntaje_total) %></th>
+        <th><%= Toma.human_attribute_name(:nivel_riesgo) %></th>
+        <th><%= Toma.human_attribute_name(:proxima_toma) %></th>
+        <th>Alerta</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tomas.each do |toma| %>
+        <tr>
+          <td><%= fecha_hora(toma.tomada_en) %></td>
+          <td><%= toma.frecuencia_respiratoria %></td>
+          <td><%= toma.spo2 %></td>
+          <td><%= si_no(toma.con_oxigeno) %></td>
+          <td><%= toma.presion_sistolica %></td>
+          <td><%= toma.pulso %></td>
+          <td><%= toma.conciencia %></td>
+          <td><%= temperatura(toma.temperatura) %></td>
+          <td><strong><%= toma.puntaje_total %></strong></td>
+          <td><%= toma.nivel_riesgo.nombre %></td>
+          <td><%= fecha_hora(toma.proxima_toma) %></td>
+          <td><%= "Deterioro" if toma.alerta_deterioro %></td>
+          <td><%= link_to "Ver", atencion_toma_path(@atencion, toma) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
 <p>
   <%= link_to "Editar", edit_atencion_path(@atencion) %> |
